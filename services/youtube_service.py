@@ -30,6 +30,58 @@ def get_playlists(youtube):
 
     return playlists
 
+# ==========================
+# Clean Song Title
+# ==========================
+
+import re
+
+def clean_title(title):
+
+    patterns = [
+        r"\(Official Video\)",
+        r"\(Official Music Video\)",
+        r"\(Official MV\)",
+        r"\(Lyrics\)",
+        r"\(Lyric Video\)",
+        r"\(Audio\)",
+        r"\(Visualizer\)",
+        r"\[Official Video\]",
+        r"\[Lyrics\]",
+        r"\[Audio\]",
+        r"\|.*",
+        r"HD",
+        r"4K"
+    ]
+
+    for pattern in patterns:
+        title = re.sub(
+            pattern,
+            "",
+            title,
+            flags=re.IGNORECASE
+        )
+
+    return title.strip()
+
+# ==========================
+# Extract Artist
+# ==========================
+
+# ==========================
+# Clean Artist
+# ==========================
+
+def clean_artist(artist):
+
+    artist = artist.replace("- Topic", "")
+
+    return artist.strip()
+
+# ==========================
+# Get Playlist Songs
+# ==========================
+
 def get_playlist_songs(youtube, playlist_id):
 
     songs = []
@@ -44,14 +96,27 @@ def get_playlist_songs(youtube, playlist_id):
 
     for item in response["items"]:
 
-        song = {
-            "video_id": item["snippet"]["resourceId"]["videoId"],
-            "title": item["snippet"]["title"]
-        }
+        title = clean_title(
+            item["snippet"]["title"]
+        )
 
-        songs.append(song)
+        artist = clean_artist(
+            item["snippet"].get(
+                "videoOwnerChannelTitle",
+                ""
+            )
+        )
+
+        songs.append({
+            "title": title,
+            "artist": artist
+        })
 
     return songs
+
+# ==========================
+# Create Playlist
+# ==========================
 
 def create_playlist(youtube, title):
 
@@ -69,16 +134,17 @@ def create_playlist(youtube, title):
 
     response = request.execute()
 
-    return {
-        "id": response["id"],
-        "title": response["snippet"]["title"]
-    }
+    return response["id"]
 
-def search_song(youtube, query):
+# ==========================
+# Search Song
+# ==========================
+
+def search_song(youtube, title, artist):
 
     request = youtube.search().list(
         part="snippet",
-        q=query,
+        q=f"{title} {artist}",
         type="video",
         maxResults=1
     )
@@ -88,12 +154,7 @@ def search_song(youtube, query):
     if len(response["items"]) == 0:
         return None
 
-    item = response["items"][0]
-
-    return {
-        "video_id": item["id"]["videoId"],
-        "title": item["snippet"]["title"]
-    }
+    return response["items"][0]["id"]["videoId"]
 
 def add_song_to_playlist(youtube, playlist_id, video_id):
 
@@ -111,3 +172,5 @@ def add_song_to_playlist(youtube, playlist_id, video_id):
     )
 
     request.execute()
+
+    return True

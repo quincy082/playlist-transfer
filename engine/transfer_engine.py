@@ -1,54 +1,55 @@
-from services.youtube_service import (
-    get_playlist_songs,
-    create_playlist,
-    search_song,
-    add_song_to_playlist
-)
-
+# ==========================
+# Transfer Playlist
+# ==========================
 
 def transfer_playlist(
-    youtube,
+    source_client,
+    source_service,
+    destination_client,
+    destination_service,
     source_playlist_id,
-    destination_title
+    destination_playlist_name
 ):
 
-    songs = get_playlist_songs(youtube, source_playlist_id)
+    songs = source_service.get_playlist_songs(
+        source_client,
+        source_playlist_id
+    )
 
-    new_playlist = create_playlist(youtube, destination_title)
+    destination_playlist_id = destination_service.create_playlist(
+        destination_client,
+        destination_playlist_name
+    )
 
-    success = 0
+    total = len(songs)
+    transferred = 0
     failed = 0
 
-    for i, song in enumerate(songs, start=1):
+    for song in songs:
 
-        print(f"[{i}/{len(songs)}] Searching: {song['title']}")
+        track_id = destination_service.search_song(
+            destination_client,
+            song["title"],
+            song["artist"]
+        )
 
-        try:
-            result = search_song(youtube, song["title"])
+        if track_id is None:
+            failed += 1
+            continue
 
-            if result is None:
-                print(f"[{i}/{len(songs)}] ❌ Song not found")
-                failed += 1
-                continue
+        success = destination_service.add_song_to_playlist(
+            destination_client,
+            destination_playlist_id,
+            track_id
+        )
 
-            add_song_to_playlist(
-                youtube,
-                new_playlist["id"],
-                result["video_id"]
-            )
-
-            print(f"[{i}/{len(songs)}] ✅ Added: {song['title']}")
-            success += 1
-
-        except Exception as e:
-            print(f"[{i}/{len(songs)}] ❌ Failed: {song['title']}")
-            print(e)
+        if success:
+            transferred += 1
+        else:
             failed += 1
 
-    report = {
-    "total": len(songs),
-    "transferred": success,
-    "failed": failed
+    return {
+        "total": total,
+        "transferred": transferred,
+        "failed": failed
     }
-
-    return report
