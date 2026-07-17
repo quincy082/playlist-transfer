@@ -94,7 +94,7 @@ playlist-transfer/
 Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/playlist-transfer.git
+git clone https://github.com/quincy082/playlist-transfer.git
 ```
 
 Navigate to the project directory
