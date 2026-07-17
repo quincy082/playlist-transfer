@@ -1,4 +1,11 @@
-# 🎵 Universal Playlist Transfer
+# Universal Playlist Transfer
+
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Spotify API](https://img.shields.io/badge/Spotify-Web%20API-1DB954?logo=spotify&logoColor=white)
+![YouTube API](https://img.shields.io/badge/YouTube-Data%20API-FF0000?logo=youtube&logoColor=white)
+![REST API](https://img.shields.io/badge/REST-API-02569B)
+![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 A Python-based application that enables seamless playlist transfer between multiple music streaming platforms using a **platform-independent transfer engine**.
 
@@ -6,7 +13,7 @@ The project follows a modular architecture where authentication, platform servic
 
 ---
 
-## ✨ Features
+## Features
 
 - 🔄 Transfer playlists across supported platforms
 - 🎵 Spotify → Spotify
@@ -20,7 +27,7 @@ The project follows a modular architecture where authentication, platform servic
 
 ---
 
-## 🏗️ Project Architecture
+## Project Architecture
 
 ```
                 main.py
@@ -39,7 +46,7 @@ The transfer engine remains completely independent of any music platform. Each p
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 playlist-transfer/
@@ -62,7 +69,7 @@ playlist-transfer/
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 ### Language
 
@@ -89,7 +96,7 @@ playlist-transfer/
 
 ---
 
-## 🚀 Installation
+## Installation
 
 Clone the repository
 
@@ -111,7 +118,7 @@ pip install -r requirements.txt
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Create the required API credentials for:
 
@@ -122,7 +129,7 @@ Add the credentials to the project as instructed in the authentication modules b
 
 ---
 
-## ▶️ Usage
+## Usage
 
 Run the application
 
@@ -141,7 +148,7 @@ The application authenticates both platforms, transfers the playlist, and genera
 
 ---
 
-## ✅ Currently Supported Platforms
+## Currently Supported Platforms
 
 | Platform | Read Playlists | Create Playlist | Transfer |
 |-----------|---------------|-----------------|----------|
@@ -150,19 +157,17 @@ The application authenticates both platforms, transfers the playlist, and genera
 
 ---
 
-## 📈 Future Enhancements
+## Future Enhancements
 
 - 🖥️ Desktop GUI *(Currently in Development)*
 - 🎯 Improved song matching
 - 🚫 Duplicate song detection
-- 🎶 Support for Apple Music
-- 🎧 Support for Deezer
 - ☁️ Web-based version
 - 📊 Transfer statistics and analytics
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, suggestions, and feature requests are welcome.
 
@@ -170,14 +175,12 @@ Feel free to fork the repository and submit a pull request.
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License.
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Quincy Vadi**
-
-If you found this project helpful, consider giving it a ⭐ on GitHub.
